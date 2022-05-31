@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <head>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg p-4">
+          <div class="container">
+            <a class="navbar-brand" th:href="@{/}">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/register}">SignUp</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/my_books}">Go to My Book</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/list_users}">List All Users</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </head>
+    <h1 class="text-center p-3 mt-5">Sign Up</h1>
+
+    <div class="container d-flex justify-content-center">
+        <form th:action="@{/process_register}" method="post" class="w100 w-sm-50" th:object="${user}">
+            <div class="row py-2">
+                <label for="name" class="form-label col-sm-3 col-form-label">Name: </label>
+                <div class="col-sm-9"><input type="text" class="form-control" id="name" placeholder="Your Firstname" required th:field="*{firstName}" minlength="2"></div>
+            </div>
+            <div class="row py-2">
+                <label for="surname" class="form-label col-sm-3 col-form-label">Surname: </label>
+                <div class="col-sm-9"><input type="text" class="form-control" id="surname" placeholder="Your Lastname" required th:field="*{lastName}" minlength="2"></div>
+            </div>
+            <div class="row py-2">
+                <label for="email" class="form-label col-sm-3 col-form-label">Email address: </label>
+                <div class="col-sm-9">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" required th:field="*{email}"></div>
+            </div>
+            <div class="row py-2">
+                <label for="password1" class="form-label col-sm-3 col-form-label">Password: </label>
+                <div class="col-sm-9"><input id="password1" type="password" class="form-control" placeholder="Your Password" required th:field="*{password}" minlength="6"></div>
+            </div>
+            <div class="row py-2">
+                <label for="password2" class="form-label col-sm-3 col-form-label">Password again: </label>
+                <div class="col-sm-9"><input id="password2" onkeyup="control()" type="password" class="form-control" placeholder="Your Password" required minlength="6"></div>
+            </div>
+            <div class="text-center">
+                <p id="message" class="text-danger">Passwords not equal.</p>
+            </div>
+            <div class="row p-2">
+                <button id="button" type="submit" class="btn btn-primary">Sign Up</button>
+            </div>
+
+            <div class="text-center"><p><a style="text-decoration: none" th:href="@{/login}">Do you have a acoount? Login.</a></p></div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("message").hidden = true;
+        function control() {
+            document.getElementById("button").disabled = true;
+            let password1 = document.getElementById("password1").value;
+            let password2 = document.getElementById("password2").value;
+            if(password1 != password2) {
+                document.getElementById("button").disabled = true;
+                document.getElementById("message").hidden = false;
+            } else if (password1 == password2) {
+                document.getElementById("button").disabled = false;
+                document.getElementById("message").hidden = true;
+            }                
+        }
+    </script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>

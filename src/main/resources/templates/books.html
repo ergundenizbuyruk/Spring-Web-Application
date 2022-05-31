@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Books</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <head>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg p-4">
+          <div class="container">
+            <a class="navbar-brand" th:href="@{/}">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/register}">SignUp</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/my_books}">Go to My Book</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/list_users}">List All Users</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </head>
+
+    <div class="container my-5 text-center">
+        <form th:action="@{/logout}" method="post">
+            <p>Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></p>
+        </form>
+    </div>
+
+    <header id="header">
+        <div class="container text-center mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="mb-4 bi bi-book-fill text-primary" viewBox="0 0 16 16">
+                <path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+            </svg>
+
+            <p style="font-size: 55px;" class="d-inline ms-2">My <span class="text-primary">Book</span> List</p>
+
+        </div>
+    </header>
+
+     <div class="container text-center">
+        
+        <div>
+            <table class="table table-hover mt-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Book Id</th>
+                        <th>Book Name</th>
+                        <th>Author Name</th>
+                        <th>ISBN</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="book: ${listAllBooks}" class="row_book">
+                    	<td th:text="${book.id}">Book Id</td>
+                        <td th:text="${book.name}">Book Name</td>
+                        <td th:text="${book.author}">Author Name</td>
+                        <td th:text="${book.isbn}">ISBN</td>
+                        <td th:text="${book.email}" style="display: none;">email</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <a th:href="@{/add_book}" class="btn btn-primary">Add Book</a>
+
+        <div class="container my-4">
+            <form th:action="@{/logout}" method="post">
+                <p><b>[[${#request.userPrincipal.principal.fullName}]]</b></p>
+                <input type="submit" name="signout" value="Sign Out" class="btn btn-primary">
+            </form>
+        </div>
+
+        <p id="book_email">[[${#request.userPrincipal.principal.username}]]</p>
+    </div>
+	 
+    <script>
+        var elements = document.getElementsByClassName("row_book");
+        var userEmail = document.getElementById("book_email");
+        userEmail.style.display = "none";
+        
+        var unnecessaryElements = Array.prototype.filter.call(elements, function(element) {
+            var childrens = element.children;
+            return (childrens[4].innerText != userEmail.innerText);
+        });
+
+        
+        for (var i=0; i < unnecessaryElements.length; i++) {
+            console.log(unnecessaryElements[i]);
+            unnecessaryElements[i].style.display = "none";
+        }
+    </script>
+</body>
+</html>
