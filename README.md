@@ -9,4 +9,4 @@ I used:<br />
 • Spring Security<br />
 • ThyMeleaf<br />
 • MySQL Connector<br />
-• Bootstrap
+• HTML-CSS-JavaScript-Bootstrap
